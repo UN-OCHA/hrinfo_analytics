@@ -1,2 +1,2 @@
 # hrinfo_analytics
-Pulls analyics from HR.info APIs and puts them into a Google Sheet
+Pulls analytics from HR.info APIs and puts them into a Google Sheet
