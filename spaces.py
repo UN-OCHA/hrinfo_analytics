@@ -16,9 +16,9 @@ def spaces(url):
         times.append(last_modified)
 
     try:
-        worksheet = base.wks.add_worksheet(title="Spaces", rows=len(spaces)+10, cols="5")
+        worksheet = base.wks.add_worksheet(title="Global Spaces", rows=len(spaces)+10, cols="5")
     except APIError:
-        worksheet = base.wks.worksheet("Spaces")
+        worksheet = base.wks.worksheet("Global Spaces")
 
     # label
     worksheet.update_acell('A1','Space')
