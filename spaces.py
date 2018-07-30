@@ -20,13 +20,19 @@ def spaces(url):
     except APIError:
         worksheet = base.wks.worksheet("Global Spaces")
 
+    # pull time of program execution and update
+    current_time = time.gmtime()
+    formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", current_time)
+    updated = "Sheet Last Updated: " + formatted_time
+    worksheet.update_acell('A1', updated)
+
     # label
-    worksheet.update_acell('A1','Space')
-    worksheet.update_acell('B1','Last Modified')
+    worksheet.update_acell('A2','Space')
+    worksheet.update_acell('B2','Last Modified')
 
     # Select a range
-    space_list = worksheet.range('A2:A'+str(len(spaces)+1))
-    time_list = worksheet.range('B2:B'+str(len(times)+1))
+    space_list = worksheet.range('A3:A'+str(len(spaces)+2))
+    time_list = worksheet.range('B3:B'+str(len(times)+2))
 
     index = 0
     for cell in space_list: #update id
