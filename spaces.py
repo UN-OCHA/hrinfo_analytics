@@ -21,17 +21,6 @@ def spaces(url):
         worksheet = base.wks.add_worksheet(title="Global Spaces", rows=len(spaces)+10, cols="5")
     except APIError:
         worksheet = base.wks.worksheet("Global Spaces")
-<<<<<<< HEAD
-
-    # Pull time of program execution and update
-    geneva = timezone('Etc/GMT-2')
-    current_time = datetime.now(geneva)
-    formatted_time = current_time.strftime("%d %m %Y %H:%M:%S")
-    updated = "Sheet Last Updated: " + formatted_time + ' (GMT+2)'
-    worksheet.update_acell('A1', updated)
-
-    # Label
-=======
 
     # pull time of program execution and update
     current_time = time.gmtime()
@@ -40,7 +29,6 @@ def spaces(url):
     worksheet.update_acell('A1', updated)
 
     # label
->>>>>>> 459fadacc9db35ac1caf46d221c52062e8f30ab1
     worksheet.update_acell('A2','Space')
     worksheet.update_acell('B2','Last Modified')
 

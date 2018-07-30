@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88048ed6-5426-484d-9d2f-71a49b4022c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6mo_contrib.py" afterPath="$PROJECT_DIR$/6mo_contrib.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/active_ops.py" afterPath="$PROJECT_DIR$/active_ops.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/content_counts.py" afterPath="$PROJECT_DIR$/content_counts.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/content_per_mo.py" afterPath="$PROJECT_DIR$/content_per_mo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contrib_orgs.py" afterPath="$PROJECT_DIR$/contrib_orgs.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contribs_per_year.py" afterPath="$PROJECT_DIR$/contribs_per_year.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/groups_by_op.py" afterPath="$PROJECT_DIR$/groups_by_op.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/list_orgs.py" afterPath="$PROJECT_DIR$/list_orgs.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/num_contribs_by_op.py" afterPath="$PROJECT_DIR$/num_contribs_by_op.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ops_by_status.py" afterPath="$PROJECT_DIR$/ops_by_status.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spaces.py" afterPath="$PROJECT_DIR$/spaces.py" />
     </list>
     <ignored path="hrinfo_analytics.iws" />
@@ -33,14 +24,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="content_counts.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="spaces.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spaces.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6439394">
+              <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="content_counts.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/content_counts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2651515">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-              <folding>
-                <element signature="e#82#93#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -64,12 +63,13 @@
         <option value="$PROJECT_DIR$/list_orgs.py" />
         <option value="$PROJECT_DIR$/num_contribs_by_op.py" />
         <option value="$PROJECT_DIR$/ops_by_status.py" />
-        <option value="$PROJECT_DIR$/spaces.py" />
         <option value="$PROJECT_DIR$/content_counts.py" />
+        <option value="$PROJECT_DIR$/spaces.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="9" />
     <option name="y" value="23" />
     <option name="width" value="1271" />
     <option name="height" value="701" />
@@ -364,7 +364,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1271" height="701" extended-state="0" />
+    <frame x="9" y="23" width="1271" height="701" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25177026" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -646,21 +646,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spaces.py">
+    <entry file="file://$PROJECT_DIR$/content_counts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03787879">
-          <caret line="1" column="51" selection-start-line="1" selection-start-column="51" selection-end-line="1" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/content_counts.py">
+    <entry file="file://$PROJECT_DIR$/spaces.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2651515">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding>
-            <element signature="e#82#93#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.6439394">
+          <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
