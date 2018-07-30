@@ -1,14 +1,10 @@
 '''
-Pulls the number of unique contributing organizations from uploaded text files.
+Pulls the number of unique contributors by organizations from a set of uploaded text files.
+Note: Run manually - Does not create a sheet, outputs to console
 
-Text files pulled from HR.info Admin Contributor view per month.
-
-Instructions:
-Right-click and select "View Page Source" on webpage, then copy and paste all into a text file.
-Save text file in the same folder as this script.
+Text files pulled from HR.info Admin Contributor view per month, and saved in the same folder as this script.
 '''
-# UPDATE TEXT_FILES AS NEEDED
-TEXT_FILES = ['jan.txt','feb.txt','march.txt','apr.txt','may.txt','june.txt']
+TEXT_FILES = ['jan.txt','feb.txt','march.txt','apr.txt','may.txt','june.txt'] # CHANGE
 
 contributors = set()
 for file in TEXT_FILES:
@@ -20,10 +16,8 @@ for file in TEXT_FILES:
             name = line.split('>',2)[2]
             name = name.split('<')[0]
             if name == "Marina Colozzi" or name == "Guillaume Viguier" or name == "Adrian Ciancio":
-                # ignore admins
                 index+=1
             else:
-                # add organization name to set if not already in set
-                contributors.add(name)
+                contributors.add(name) # add organization name to set if not already in set
         index+=1
 print(len(contributors))

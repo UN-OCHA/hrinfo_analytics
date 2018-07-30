@@ -1,8 +1,8 @@
 '''
-Pull the number of documents/events/assessments/infographics uploaded in a given month/time period.
-(Python IDE setup not needed)
+Outputs the number of documents/events/assessments/infographics uploaded in a given month/time period.
+Based on content creation date on HR.info (NOT publication date).
 
-Instructions:
+Python IDE setup not needed - Run manually:
 1) http://jupyter.org/try - Click "Try Jupyter with Python"
 2) Wait as it sets up, then click the scissors icon (in the bar) 3 times
 3) Copy and paste this script into the box, then hit run.

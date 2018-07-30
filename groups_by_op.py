@@ -1,24 +1,32 @@
 '''
-Pulls all groups (sectors, clusters, sub-clusters) by operation, including date last modified
+Pulls all groups (sectors, clusters, sub-clusters) by operation, including date last modified - automated
 '''
 import base
 import time
 from gspread.exceptions import APIError
+from datetime import datetime
+from pytz import timezone
 
 def compiling(dict):
 
     # Upload to Sheets
-    rows = len(dict)+5
     try:
-        worksheet = base.wks.add_worksheet(title="Groups By Operation", rows=str(rows), cols="10")
+        worksheet = base.wks.add_worksheet(title="Groups By Operation", rows=500, cols=10)
     except APIError:
         worksheet = base.wks.worksheet("Groups By Operation")
 
+    # Pull time of program execution and update
+    geneva = timezone('Etc/GMT-2')
+    current_time = datetime.now(geneva)
+    formatted_time = current_time.strftime("%d %m %Y %H:%M:%S")
+    updated = "Sheet Last Updated: " + formatted_time + ' (GMT+2)'
+    worksheet.update_acell('A1', updated)
+
     # label
-    worksheet.update_acell('A1','Operation')
-    worksheet.update_acell('B1','Name')
-    worksheet.update_acell('C1','Type')
-    worksheet.update_acell('D1','Last Modified')
+    worksheet.update_acell('A2','Operation')
+    worksheet.update_acell('B2','Name')
+    worksheet.update_acell('C2','Type')
+    worksheet.update_acell('D2','Last Modified')
 
     # Dict to list
     mylist = []
@@ -30,12 +38,12 @@ def compiling(dict):
     rows = 0
     for operation in mylist:
         rows += len(operation[1])
-    rows = str(rows+1)
+    rows = str(rows+2)
 
-    op_list = worksheet.range('A2:A'+rows)
-    name_list = worksheet.range('B2:B'+rows)
-    type_list = worksheet.range('C2:C'+rows)
-    time_list = worksheet.range('D2:D'+rows)
+    op_list = worksheet.range('A3:A'+rows)
+    name_list = worksheet.range('B3:B'+rows)
+    type_list = worksheet.range('C3:C'+rows)
+    time_list = worksheet.range('D3:D'+rows)
 
     op_list_index = 0
     index = 0

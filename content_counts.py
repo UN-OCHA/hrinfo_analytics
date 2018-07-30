@@ -1,21 +1,16 @@
 '''
-Pulls counts of different content types for all organizations
+Pulls counts of different content types for all organizations - automated
 '''
 import base
 from gspread.exceptions import APIError
+from datetime import datetime
+from pytz import timezone
+import list_orgs
 
 def collect_orgs(content, org_info):
     for org in content['data']:
         org_info.append((org['id'],org['label']))
     return content, org_info
-
-def list_of_orgs():
-    url = 'https://www.humanitarianresponse.info/en/api/v1.0/organizations?fields=id,label'
-    content = base.open_url(url)
-    org_info = []
-    content, org_info = collect_orgs(content, org_info)
-    content, org_info = next(content, org_info)
-    return org_info
 
 def next_page(content, count):
     try:
@@ -28,23 +23,24 @@ def next_page(content, count):
     return content, count
 
 def content(org_info):
-    rows = str(len(org_info)+1)
+    num_orgs = len(org_info)
+    rows = str(num_orgs+2)
 
     # open sheet
     try:
-        worksheet = base.wks.add_worksheet(title="Content By Org", rows=(len(org_info)+1), cols=10)
+        worksheet = base.wks.add_worksheet(title="Content By Org", rows=(num_orgs+4), cols=10)
         # label
-        worksheet.update_acell('A1','Organization')
-        worksheet.update_acell('B1','Documents')
-        worksheet.update_acell('C1','Maps/Infographics')
-        worksheet.update_acell('D1','Events')
-        worksheet.update_acell('E1','Assessments')
-        worksheet.update_acell('F1','Total Content')
+        worksheet.update_acell('A2','Organization')
+        worksheet.update_acell('B2','Documents')
+        worksheet.update_acell('C2','Maps/Infographics')
+        worksheet.update_acell('D2','Events')
+        worksheet.update_acell('E2','Assessments')
+        worksheet.update_acell('F2','Total Content')
     except APIError:
         worksheet = base.wks.worksheet("Content By Org")
 
     # organizations
-    name_cells = worksheet.range('A2:A'+rows)
+    name_cells = worksheet.range('A3:A'+rows)
     index = 0
     for cell in name_cells:
         cell.value = org_info[index][1]
@@ -55,12 +51,9 @@ def content(org_info):
     doc_counts = []
     docs_base_url = 'https://www.humanitarianresponse.info/en/api/v1.0/documents?fields=organizations.id&filter[organizations]='
 
-    # to modify to run from 155, change range to start to 155-2
-    cell_num = 2 # exact starting cell
-    for index in range(0,4525): #subtract 2 from start, 1 from end
+    cell_num = 3
+    for index in range(0, num_orgs):
         org_id = org_info[index][0]
-        org_name = org_info[index][1]
-        print(org_id, org_name)
         count = 0
         docs_full_url = docs_base_url + str(org_id)
         content = base.open_url(docs_full_url)
@@ -69,7 +62,7 @@ def content(org_info):
         doc_counts.append((org_id,count))
         cell_num+=1
 
-    doc_cells = worksheet.range('B2:B4526') #put exact cells here, inclusive
+    doc_cells = worksheet.range('B3:B'+rows)
     index = 0
     for cell in doc_cells:
         cell.value = doc_counts[index][1]
@@ -80,12 +73,9 @@ def content(org_info):
     map_counts = []
     maps_base_url = 'https://www.humanitarianresponse.info/en/api/v1.0/infographics?fields=organizations.id&filter[organizations]='
 
-    # to modify to run from 155, change range to start to 155-2
-    cell_num = 2 # exact starting cell
-    for index in range(0,4525): # subtract 2 from start, 1 from end
+    cell_num = 3
+    for index in range(0,num_orgs):
         org_id = org_info[index][0]
-        org_name = org_info[index][1]
-        print(org_id, org_name)
         count = 0
         maps_full_url = maps_base_url + str(org_id)
         content = base.open_url(maps_full_url)
@@ -94,7 +84,7 @@ def content(org_info):
         map_counts.append((org_id,count))
         cell_num+=1
 
-    map_cells = worksheet.range('C2:C4526') #put exact cells here, inclusive
+    map_cells = worksheet.range('C3:C'+rows)
     index = 0
     for cell in map_cells:
         cell.value = map_counts[index][1]
@@ -105,12 +95,9 @@ def content(org_info):
     events_counts = []
     events_base_url = 'https://www.humanitarianresponse.info/en/api/v1.0/events?fields=organizations.id&filter[organizations]='
 
-    # to modify to run from 155, change range to start to 155-2
-    cell_num = 2 # exact starting cell
-    for index in range(0,4525): # subtract 2 from start, 1 from end
+    cell_num = 3
+    for index in range(0,num_orgs):
         org_id = org_info[index][0]
-        org_name = org_info[index][1]
-        print(org_id, org_name)
         count = 0
         events_full_url = events_base_url + str(org_id)
         content = base.open_url(events_full_url)
@@ -119,7 +106,7 @@ def content(org_info):
         events_counts.append((org_id,count))
         cell_num+=1
 
-    events_cells = worksheet.range('D2:D4526') #put exact cells here, inclusive
+    events_cells = worksheet.range('D3:D'+rows)
     index = 0
     for cell in events_cells:
         cell.value = events_counts[index][1]
@@ -130,12 +117,9 @@ def content(org_info):
     assess_counts = []
     assess_base_url = 'https://www.humanitarianresponse.info/en/api/v1.0/assessments?fields=organizations.id&filter[organizations]='
 
-    # to modify to run from 155, change range to start to 155-2
-    cell_num = 2 #exact starting cell
-    for index in range(0,4525): #subtract 2 from start, 1 from end
+    cell_num = 3
+    for index in range(0,num_orgs):
         org_id = org_info[index][0]
-        org_name = org_info[index][1]
-        print(org_id, org_name)
         count = 0
         assess_full_url = assess_base_url + str(org_id)
         content = base.open_url(assess_full_url)
@@ -144,15 +128,22 @@ def content(org_info):
         assess_counts.append((org_id,count))
         cell_num+=1
 
-    assess_cells = worksheet.range('E2:E4526') #put exact cells here, inclusive
+    assess_cells = worksheet.range('E3:E'+rows)
     index = 0
     for cell in assess_cells:
         cell.value = assess_counts[index][1]
         index+=1
     worksheet.update_cells(assess_cells)
 
+    # Pull time of program execution and update
+    geneva = timezone('Etc/GMT-2')
+    current_time = datetime.now(geneva)
+    formatted_time = current_time.strftime("%d %m %Y %H:%M:%S")
+    updated = "Sheet Last Updated: " + formatted_time + ' (GMT+2)'
+    worksheet.update_acell('A1', updated)
+
 def main():
-    org_info = list_of_orgs()
+    org_info = list_orgs.main()
     content(org_info)
 
 if __name__ == '__main__':

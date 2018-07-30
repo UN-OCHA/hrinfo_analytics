@@ -1,5 +1,5 @@
 '''
-Pulls active operations (and IDs)
+Pulls active operations and IDs, used by num_contribs_by_op.py
 
 No-code shortcut for number of active operations on a page:
 1) https://www.humanitarianresponse.info/api/v1.0/operations?fields=id,label,status

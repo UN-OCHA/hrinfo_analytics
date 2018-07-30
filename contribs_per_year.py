@@ -1,10 +1,12 @@
 '''
-Pulls contributing organizations (based on documents, events, maps/infographics) for each year
+Pulls contributing organizations (based on documents, events, maps/infographics) for each year  - automated
 '''
 import base
 from gspread.exceptions import APIError
 import time
 import urllib.request
+from datetime import datetime
+from pytz import timezone
 
 def next_page(content,years):
     try:
@@ -70,21 +72,28 @@ def contribs_by_year():
     try:
         worksheet = base.wks.add_worksheet(title="Contribs By Year", rows=100, cols=10)
         # label
-        worksheet.update_acell('A1','2012')
-        worksheet.update_acell('B1','2013')
-        worksheet.update_acell('C1','2014')
-        worksheet.update_acell('D1','2015')
-        worksheet.update_acell('E1','2016')
-        worksheet.update_acell('F1','2017')
-        worksheet.update_acell('G1','2018')
+        worksheet.update_acell('A2','2012')
+        worksheet.update_acell('B2','2013')
+        worksheet.update_acell('C2','2014')
+        worksheet.update_acell('D2','2015')
+        worksheet.update_acell('E2','2016')
+        worksheet.update_acell('F2','2017')
+        worksheet.update_acell('G2','2018')
     except APIError:
         worksheet = base.wks.worksheet("Contribs By Year")
+
+    # Pull time of program execution and update
+    geneva = timezone('Etc/GMT-2')
+    current_time = datetime.now(geneva)
+    formatted_time = current_time.strftime("%d %m %Y %H:%M:%S")
+    updated = "Sheet Last Updated: " + formatted_time + ' (GMT+2)'
+    worksheet.update_acell('A1', updated)
 
     # 2012
     orgs = years['2012']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2012'])+1)
-    org_cells = worksheet.range('A2:A'+num_orgs)
+    num_orgs = str(len(years['2012'])+2)
+    org_cells = worksheet.range('A3:A'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -94,8 +103,8 @@ def contribs_by_year():
     # 2013
     orgs = years['2013']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2013'])+1)
-    org_cells = worksheet.range('B2:B'+num_orgs)
+    num_orgs = str(len(years['2013'])+2)
+    org_cells = worksheet.range('B3:B'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -105,8 +114,8 @@ def contribs_by_year():
     # 2014
     orgs = years['2014']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2014'])+1)
-    org_cells = worksheet.range('C2:C'+num_orgs)
+    num_orgs = str(len(years['2014'])+2)
+    org_cells = worksheet.range('C3:C'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -116,8 +125,8 @@ def contribs_by_year():
     # 2015
     orgs = years['2015']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2015'])+1)
-    org_cells = worksheet.range('D2:D'+num_orgs)
+    num_orgs = str(len(years['2015'])+2)
+    org_cells = worksheet.range('D3:D'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -127,8 +136,8 @@ def contribs_by_year():
     # 2016
     orgs = years['2016']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2016'])+1)
-    org_cells = worksheet.range('E2:E'+num_orgs)
+    num_orgs = str(len(years['2016'])+2)
+    org_cells = worksheet.range('E3:E'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -138,8 +147,8 @@ def contribs_by_year():
     # 2017
     orgs = years['2017']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2017'])+1)
-    org_cells = worksheet.range('F2:F'+num_orgs)
+    num_orgs = str(len(years['2017'])+2)
+    org_cells = worksheet.range('F3:F'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
@@ -149,8 +158,8 @@ def contribs_by_year():
     # 2018
     orgs = years['2018']
     orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2018'])+1)
-    org_cells = worksheet.range('G2:G'+num_orgs)
+    num_orgs = str(len(years['2018'])+2)
+    org_cells = worksheet.range('G3:G'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]

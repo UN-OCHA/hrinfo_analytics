@@ -1,10 +1,12 @@
 '''
-Lists operations by status, as well as the date each operation was last modified.
+Lists operations by status, as well as the date each operation was last modified. - automated
 '''
 
 import base
 from gspread.exceptions import APIError
 import time
+from datetime import datetime
+from pytz import timezone
 
 def next_page(content,op_status):
     try:
@@ -41,15 +43,22 @@ def ops_by_status(url):
     except APIError:
         worksheet = base.wks.worksheet("Ops By Status")
 
+    # Pull time of program execution and update
+    geneva = timezone('Etc/GMT-2')
+    current_time = datetime.now(geneva)
+    formatted_time = current_time.strftime("%d %m %Y %H:%M:%S")
+    updated = "Sheet Last Updated: " + formatted_time + ' (GMT+2)'
+    worksheet.update_acell('A1', updated)
+
     # Label
-    worksheet.update_acell('A1','Operation')
-    worksheet.update_acell('B1','Status')
-    worksheet.update_acell('C1','Last Modified')
+    worksheet.update_acell('A2','Operation')
+    worksheet.update_acell('B2','Status')
+    worksheet.update_acell('C2','Last Modified')
 
     # Select a range
-    org_list = worksheet.range('A2:A'+str(len(op_status)+1))
-    status_list = worksheet.range('B2:B'+str(len(op_status)+1))
-    changed_list = worksheet.range('C2:C'+str(len(op_status)+1))
+    org_list = worksheet.range('A3:A'+str(len(op_status)+2))
+    status_list = worksheet.range('B3:B'+str(len(op_status)+2))
+    changed_list = worksheet.range('C3:C'+str(len(op_status)+2))
 
     # Update organization
     index = 0
