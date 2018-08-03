@@ -7,5 +7,4 @@ COPY . .
 RUN apk add -U \
         git \
         openssh-client && \
-    touch client_secret.json && \
     pip install -r requirements.txt
