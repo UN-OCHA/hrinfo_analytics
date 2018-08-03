@@ -4,7 +4,4 @@ WORKDIR /src
 
 COPY . .
 
-RUN apk add -U \
-        git \
-        openssh-client && \
-    pip install -r requirements.txt
+RUN pip install -r requirements.txt
