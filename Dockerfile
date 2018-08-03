@@ -7,8 +7,5 @@ COPY . .
 RUN apk add -U \
         git \
         openssh-client && \
-    pip install \
-        gspread \
-        oauth2client \
-        pytz
+    pip install -r requirements.txt
 
