@@ -15,3 +15,13 @@ Example:
 Example:
 
 `docker run --rm -v $PWD/client_secret.json:/src/client_secret.json -w /src analytics:1 python3 list_orgs.py`
+
+## Use docker-compose
+
+The image will be built automatically if it was not yet built.
+
+`docker-compose run --rm analytics python3 <script_name>`
+
+Example:
+
+`docker-compose run --rm analytics python3 list_orgs.py`
