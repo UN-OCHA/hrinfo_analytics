@@ -11,3 +11,10 @@ services:
       CLIENT_ID:
       CLIENT_X509_CERT_URL:
 
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: $SUBNET
+
