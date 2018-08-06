@@ -70,7 +70,7 @@ def contribs_by_year():
     years = next_page(content,years)
 
     try:
-        worksheet = base.wks.add_worksheet(title="Contribs By Year", rows=100, cols=10)
+        worksheet = base.wks.add_worksheet(title="Contributing Orgs By Year", rows=100, cols=10)
         # label
         worksheet.update_acell('A2','2012')
         worksheet.update_acell('B2','2013')
@@ -79,8 +79,9 @@ def contribs_by_year():
         worksheet.update_acell('E2','2016')
         worksheet.update_acell('F2','2017')
         worksheet.update_acell('G2','2018')
+        worksheet.update_acell('H2','2019')
     except APIError:
-        worksheet = base.wks.worksheet("Contribs By Year")
+        worksheet = base.wks.worksheet("Contributing Orgs By Year")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')
@@ -160,6 +161,17 @@ def contribs_by_year():
     orgs = sorted(orgs, key=str.lower)
     num_orgs = str(len(years['2018'])+2)
     org_cells = worksheet.range('G3:G'+num_orgs)
+    index = 0
+    for cell in org_cells: #update orgs
+        cell.value = orgs[index]
+        index+=1
+    worksheet.update_cells(org_cells)
+
+    # 2019
+    orgs = years['2019']
+    orgs = sorted(orgs, key=str.lower)
+    num_orgs = str(len(years['2019'])+2)
+    org_cells = worksheet.range('H3:H'+num_orgs)
     index = 0
     for cell in org_cells: #update orgs
         cell.value = orgs[index]
