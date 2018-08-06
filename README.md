@@ -1,4 +1,4 @@
-### HRInfo Analytics
+# HR.info Analytics
 
 ## Build the docker image
 
