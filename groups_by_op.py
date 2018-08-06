@@ -11,9 +11,9 @@ def compiling(dict):
 
     # Upload to Sheets
     try:
-        worksheet = base.wks.add_worksheet(title="Groups By Operation", rows=500, cols=10)
+        worksheet = base.wks.add_worksheet(title="Groups By Active Operation", rows=500, cols=10)
     except APIError:
-        worksheet = base.wks.worksheet("Groups By Operation")
+        worksheet = base.wks.worksheet("Groups By Active Operation")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')
@@ -27,6 +27,8 @@ def compiling(dict):
     worksheet.update_acell('B2','Name')
     worksheet.update_acell('C2','Type')
     worksheet.update_acell('D2','Last Modified')
+    worksheet.update_acell('E2','Created')
+    worksheet.update_acell('F2','Published?')
 
     # Dict to list
     mylist = []
@@ -44,6 +46,8 @@ def compiling(dict):
     name_list = worksheet.range('B3:B'+rows)
     type_list = worksheet.range('C3:C'+rows)
     time_list = worksheet.range('D3:D'+rows)
+    create_list = worksheet.range('E3:E'+rows)
+    pub_list = worksheet.range('F3:F'+rows)
 
     op_list_index = 0
     index = 0
@@ -56,12 +60,18 @@ def compiling(dict):
         name_cell = name_list[index]
         type_cell = type_list[index]
         time_cell = time_list[index]
+        create_cell = create_list[index]
+        pub_cell = pub_list[index]
         clus_name = operation[1][within_op_index][0]
         type_name = operation[1][within_op_index][1]
         time_name = operation[1][within_op_index][2]
+        create_name = operation[1][within_op_index][3]
+        pub_name = operation[1][within_op_index][4]
         name_cell.value = clus_name
         type_cell.value = type_name
         time_cell.value = time_name
+        create_cell.value = create_name
+        pub_cell.value = pub_name
         cluster_index = 0
         while same_op:
             cell.value = op_name
@@ -76,18 +86,26 @@ def compiling(dict):
             name_cell = name_list[index]
             type_cell = type_list[index]
             time_cell = time_list[index]
+            create_cell = create_list[index]
+            pub_cell = pub_list[index]
             clus_name = operation[1][within_op_index][0]
             type_name = operation[1][within_op_index][1]
             time_name = operation[1][within_op_index][2]
+            create_name = operation[1][within_op_index][3]
+            pub_name = operation[1][within_op_index][4]
             name_cell.value = clus_name
             type_cell.value = type_name
             time_cell.value = time_name
+            create_cell.value = create_name
+            pub_cell.value = pub_name
 
     # Update in batch - avoids API timeout problem
     worksheet.update_cells(op_list)
     worksheet.update_cells(name_list)
     worksheet.update_cells(type_list)
     worksheet.update_cells(time_list)
+    worksheet.update_cells(create_list)
+    worksheet.update_cells(pub_list)
     exit()
 
 def next_page(content, dict, index):
@@ -121,14 +139,25 @@ def compile_clusters(content, dict, index):
         type = group['type']
 
         last_modified = int(group['changed'])
-        last_modified = time.strftime("%Y %d %b", time.localtime(last_modified))
+        last_modified = time.strftime("%d-%b-%Y", time.localtime(last_modified))
+
+        created = int(group['created'])
+        created = time.strftime("%d-%b-%Y", time.localtime(created))
+
+        published = int(group['published'])
+        if published == 1:
+            pub_stat = "Yes"
+        elif published == 0:
+            pub_stat = "No"
+        else:
+            pub_stat = ""
 
         if operation not in dict:  # cluster's operation not in dictionary already
             key = operation
             dict.setdefault(key, [])
-            dict[key].append((name,type,last_modified))  # map the cluster to the operation
+            dict[key].append((name,type,last_modified,created,pub_stat))  # map the cluster to the operation
         else:  # operation is already in there
-            dict[operation].append((name,type,last_modified))
+            dict[operation].append((name,type,last_modified,created,pub_stat))
     return dict, index
 
 def groups_by_op(base_url):
