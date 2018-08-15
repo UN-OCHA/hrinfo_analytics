@@ -10,7 +10,6 @@ services:
       CLIENT_EMAIL:
       CLIENT_ID:
       CLIENT_X509_CERT_URL:
-      API_KEY:
 
 networks:
   default:

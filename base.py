@@ -6,7 +6,6 @@ import urllib.request
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
-# import json
 
 # Set up Google Sheets connection
 scope = ['https://spreadsheets.google.com/feeds',
@@ -25,7 +24,6 @@ else:
     creds["token_uri"] = "https://accounts.google.com/o/oauth2/token"
     creds["auth_provider_x509_cert_url"] = "https://www.googleapis.com/oauth2/v1/certs"
     creds["client_x509_cert_url"] = os.getenv('CLIENT_X509_CERT_URL')
-    creds["api_key"] = os.getenv('API_KEY')
     # print(json.dumps(creds,ident=2))
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds, scope)
 
