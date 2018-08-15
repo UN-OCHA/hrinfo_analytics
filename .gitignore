@@ -1,1 +1,4 @@
 client_secret.json
+.idea/**
+__pycache__/**
+client_secret*.json
