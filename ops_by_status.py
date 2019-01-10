@@ -37,11 +37,12 @@ def ops_by_status(url):
         mylist.append(temp)
 
     rows = len(mylist)+5
+    spreadsheet = base.get_spreadsheet()
     # Upload to Sheets
     try:
-        worksheet = base.wks.add_worksheet(title="Ops By Status", rows=str(rows), cols="10")
+        worksheet = spreadsheet.add_worksheet(title="Ops By Status", rows=str(rows), cols="10")
     except APIError:
-        worksheet = base.wks.worksheet("Ops By Status")
+        worksheet = spreadsheet.worksheet("Ops By Status")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')

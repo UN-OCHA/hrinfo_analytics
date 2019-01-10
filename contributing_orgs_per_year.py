@@ -69,8 +69,9 @@ def contribs_by_year():
     years = work(content,years)
     years = next_page(content,years)
 
+    spreadsheet = base.get_spreadsheet()
     try:
-        worksheet = base.wks.add_worksheet(title="Contributing Orgs By Year", rows=100, cols=10)
+        worksheet = spreadsheet.add_worksheet(title="Contributing Orgs By Year", rows=100, cols=10)
         # label
         worksheet.update_acell('A2','2012')
         worksheet.update_acell('B2','2013')
@@ -81,7 +82,7 @@ def contribs_by_year():
         worksheet.update_acell('G2','2018')
         worksheet.update_acell('H2','2019')
     except APIError:
-        worksheet = base.wks.worksheet("Contributing Orgs By Year")
+        worksheet = spreadsheet.worksheet("Contributing Orgs By Year")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')

@@ -33,12 +33,22 @@ def pull_contribs_next_page(docs_content, contribs):
     return contribs
 
 def num_contribs_by_op(op_ids, op_names):
+    numbers = []
     try:
-        try:
-            worksheet = base.wks.add_worksheet(title="Num Contribs By Op", rows=len(op_ids)+1, cols=10)
-        except APIError:
-            worksheet = base.wks.worksheet("Num Contribs By Op")
         docs_base_url = 'https://www.humanitarianresponse.info/en/api/v1.0/documents?filter[operation]='
+        for op_id in op_ids:
+            contribs = [] # list of contributors/organizations
+            docs_full_url = docs_base_url + str(op_id)
+            docs_content = base.open_url(docs_full_url)
+            contribs = pull_contribs(docs_content, contribs)
+            contribs = pull_contribs_next_page(docs_content, contribs)
+            numbers.append(len(contribs))
+
+        spreadsheet = base.get_spreadsheet()
+        try:
+            worksheet = spreadsheet.add_worksheet(title="Num Contribs By Op", rows=len(op_ids)+1, cols=10)
+        except APIError:
+            worksheet = spreadsheet.worksheet("Num Contribs By Op")
 
         # Label
         worksheet.update_acell('A2','Operation')
@@ -53,19 +63,11 @@ def num_contribs_by_op(op_ids, op_names):
 
         index = 3
         for op_id in op_ids:
-            #print(op_id)
-            contribs = [] # list of contributors/organizations
-            docs_full_url = docs_base_url + str(op_id)
-            docs_content = base.open_url(docs_full_url)
-            contribs = pull_contribs(docs_content, contribs)
-            contribs = pull_contribs_next_page(docs_content, contribs)
-            number = len(contribs)
-            #print('index: ', index, ' number: ', number)
             try:
-                worksheet.update_cell(index,2,number)
+                worksheet.update_cell(index,2,numbers[index - 3])
             except APIError:
                 time.sleep(10)
-                worksheet.update_cell(index,2,number)
+                worksheet.update_cell(index,2,numbers[index - 3])
             index+=1
     except urllib.request.HTTPError: # if it times out, start over
         return num_contribs_by_op(op_ids, op_names)

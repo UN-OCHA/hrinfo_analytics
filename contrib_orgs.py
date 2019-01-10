@@ -19,10 +19,11 @@ def contrib_orgs(TEXT_FILE, NAME_OF_SHEET):
 
     lines = [line.rstrip('\n') for line in open(TEXT_FILE)] # read line by line
 
+    spreadsheet = base.get_spreadsheet()
     try:
-        worksheet = base.wks.add_worksheet(title=NAME_OF_SHEET, rows=len(lines), cols=10)
+        worksheet = spreadsheet.add_worksheet(title=NAME_OF_SHEET, rows=len(lines), cols=10)
     except APIError:
-        worksheet = base.wks.worksheet(NAME_OF_SHEET)
+        worksheet = spreadsheet.worksheet(NAME_OF_SHEET)
 
     test = lines[70:]
     index = 0

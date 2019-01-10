@@ -36,9 +36,10 @@ def content():
     num_orgs = len(org_info)
     rows = str(num_orgs+2)
 
+    spreadsheet = base.get_spreadsheet()
     # open sheet
     try:
-        worksheet = base.wks.add_worksheet(title="Content By Org", rows=(num_orgs+4), cols=10)
+        worksheet = spreadsheet.add_worksheet(title="Content By Org", rows=(num_orgs+4), cols=10)
         # label
         worksheet.update_acell('A2','Organization')
         worksheet.update_acell('B2','Documents')
@@ -47,7 +48,7 @@ def content():
         worksheet.update_acell('E2','Assessments')
         worksheet.update_acell('F2','Total Content')
     except APIError:
-        worksheet = base.wks.worksheet("Content By Org")
+        worksheet = spreadsheet.worksheet("Content By Org")
 
     # organizations
     name_cells = worksheet.range('A3:A'+rows)

@@ -17,10 +17,11 @@ def spaces(url):
         spaces.append(data['label'])
         times.append(last_modified)
 
+    spreadsheet = base.get_spreadsheet()
     try:
-        worksheet = base.wks.add_worksheet(title="Global Spaces", rows=len(spaces)+10, cols="5")
+        worksheet = spreadsheet.add_worksheet(title="Global Spaces", rows=len(spaces)+10, cols="5")
     except APIError:
-        worksheet = base.wks.worksheet("Global Spaces")
+        worksheet = spreadsheet.worksheet("Global Spaces")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')

@@ -9,11 +9,12 @@ from pytz import timezone
 
 def compiling(dict):
 
+    spreadsheet = base.get_spreadsheet()
     # Upload to Sheets
     try:
-        worksheet = base.wks.add_worksheet(title="Groups By Active Operation", rows=500, cols=10)
+        worksheet = spreadsheet.add_worksheet(title="Groups By Active Operation", rows=500, cols=10)
     except APIError:
-        worksheet = base.wks.worksheet("Groups By Active Operation")
+        worksheet = spreadsheet.worksheet("Groups By Active Operation")
 
     # Pull time of program execution and update
     geneva = timezone('Etc/GMT-2')
