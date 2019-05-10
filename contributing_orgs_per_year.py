@@ -12,6 +12,7 @@ def next_page(content,years):
     try:
         try:
             url = content['next']['href']
+            print(url)
             content = base.open_url(url)
             years = work(content, years)
             years = next_page(content, years)
@@ -47,24 +48,40 @@ def work(content, years):
             pass # no year or no org
     return years
 
+def update_worksheet_year(years, year, range, worksheet):
+    orgs = years[year]
+    orgs = sorted(orgs, key=str.lower)
+    num_orgs = str(len(years[year])+2)
+    org_cells = worksheet.range(range + num_orgs)
+    index = 0
+    for cell in org_cells: #update orgs
+        cell.value = orgs[index]
+        index+=1
+    worksheet.update_cells(org_cells)
+
 def contribs_by_year():
 
     years = {}
 
+    # current year
+    utc = timezone('UTC')
+    tstamp = int(datetime(2019, 1, 1, 0, 0, 0, tzinfo=utc).timestamp())
+    tstamp = str(tstamp)
+
     # events
-    events_url = 'https://www.humanitarianresponse.info/en/api/v1.0/events?fields=organizations.label,created'
+    events_url = 'https://www.humanitarianresponse.info/en/api/v1.0/events?fields=organizations.label,created&filter[created][value]=' + tstamp + '&filter[created][operator]=>='
     content = base.open_url(events_url)
     years = work(content,years)
     years = next_page(content,years)
 
     # docs
-    docs_url = 'https://www.humanitarianresponse.info/api/v1.0/documents?fields=organizations.label,created'
+    docs_url = 'https://www.humanitarianresponse.info/api/v1.0/documents?fields=organizations.label,created&filter[created][value]=' + tstamp + '&filter[created][operator]=>='
     content = base.open_url(docs_url)
     years = work(content,years)
     years = next_page(content,years)
 
     # maps/infographics
-    maps_url = 'https://www.humanitarianresponse.info/api/v1.0/infographics?fields=organizations.label,created'
+    maps_url = 'https://www.humanitarianresponse.info/api/v1.0/infographics?fields=organizations.label,created&filter[created][value]=' + tstamp + '&filter[created][operator]=>='
     content = base.open_url(maps_url)
     years = work(content,years)
     years = next_page(content,years)
@@ -92,92 +109,28 @@ def contribs_by_year():
     worksheet.update_acell('A1', updated)
 
     # 2012
-    orgs = years['2012']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2012'])+2)
-    org_cells = worksheet.range('A3:A'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2012', 'A3:A', worksheet)
 
     # 2013
-    orgs = years['2013']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2013'])+2)
-    org_cells = worksheet.range('B3:B'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2013', 'B3:B', worksheet)
 
     # 2014
-    orgs = years['2014']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2014'])+2)
-    org_cells = worksheet.range('C3:C'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2014', 'C3:C', worksheet)
 
     # 2015
-    orgs = years['2015']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2015'])+2)
-    org_cells = worksheet.range('D3:D'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2015', 'D3:D', worksheet)
 
     # 2016
-    orgs = years['2016']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2016'])+2)
-    org_cells = worksheet.range('E3:E'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2016', 'E3:E', worksheet)
 
     # 2017
-    orgs = years['2017']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2017'])+2)
-    org_cells = worksheet.range('F3:F'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2017', 'F3:F', worksheet)
 
     # 2018
-    orgs = years['2018']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2018'])+2)
-    org_cells = worksheet.range('G3:G'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    #update_worksheet_year(years, '2018', 'G3:G', worksheet)
 
     # 2019
-    orgs = years['2019']
-    orgs = sorted(orgs, key=str.lower)
-    num_orgs = str(len(years['2019'])+2)
-    org_cells = worksheet.range('H3:H'+num_orgs)
-    index = 0
-    for cell in org_cells: #update orgs
-        cell.value = orgs[index]
-        index+=1
-    worksheet.update_cells(org_cells)
+    update_worksheet_year(years, '2019', 'H3:H', worksheet)
 
 def main():
     contribs_by_year()
